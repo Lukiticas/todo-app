@@ -66,6 +66,11 @@ const TaskBody = styled.div`
     ${({ theme }) =>
       theme.title === "dark" ? theme.colors.wrd900 : theme.colors.wrd400};
 
+  &:first-of-type {
+    border-top-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+  }
+
   &[data-done="true"] {
     ${TaskIconBody} {
       outline: none;

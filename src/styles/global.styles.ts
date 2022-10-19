@@ -132,7 +132,6 @@ const MainApp = styled.div`
 `;
 
 const MainContent = styled.main`
-  overflow: hidden;
   margin-block: 1.3rem;
   inline-size: 100%;
 
@@ -140,7 +139,11 @@ const MainContent = styled.main`
 
   border-radius: 0.2rem;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px; ;
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+
+  @media screen and (max-width: 800px) {
+    margin-block-end: 5rem;
+  }
 `;
 
 const Footer = styled.footer`
