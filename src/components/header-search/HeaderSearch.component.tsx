@@ -19,12 +19,20 @@ const HeaderSearch = () => {
     setSearchValue(target.value);
   };
 
+  const handleSubmitWithKey = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.code !== "Enter" || event.key !== "Enter") return;
+    handleSubmitTodo();
+  };
+
   return (
     <HI.HeaderInputBody>
       <HI.HeaderIconCheck onClick={handleSubmitTodo}>
         <HI.HeaderIcon src={IconCheck} alt="" />
       </HI.HeaderIconCheck>
       <HI.HeaderInput
+        onKeyDown={(e) => handleSubmitWithKey(e)}
         value={searchValue}
         onChange={handleChange}
         placeholder="Create a new Todo..."
