@@ -1,43 +1,32 @@
+import { MainFooterProps } from "../../interfaces";
 import Filter from "../Filter/Filter.component";
-import {
-  ClearCompletedButton,
-  ItemsRemainingSpan,
-  MainFooterBody,
-} from "./MainFooter.styles";
+import * as MF from "./MainFooter.styles";
 
-interface MainFooterProps {
-  itemsRemaining: number | string;
-  setFilterValue: React.Dispatch<React.SetStateAction<string>>;
-  filterValue: string;
-  handleClear: () => void;
-}
+const MainFooter = (props: MainFooterProps) => {
+  const { itemsRemaining, handleQuery, handleClear } = props;
 
-const MainFooter = ({
-  itemsRemaining,
-  setFilterValue,
-  filterValue,
-  handleClear,
-}: MainFooterProps) => {
+  const hasItensMessage = `${itemsRemaining} ${
+    itemsRemaining > 1 ? "items" : "item"
+  } left`;
+  const noItemsMessage = "no task, add one!";
+
   return (
-    <MainFooterBody>
-      <ItemsRemainingSpan>
-        {itemsRemaining
-          ? `${itemsRemaining} item${itemsRemaining > 1 ? "s" : null} left`
-          : "no task, add one!"}
-      </ItemsRemainingSpan>
+    <MF.MainFooterBody>
+      <MF.ItemsRemainingSpan>
+        {itemsRemaining ? hasItensMessage : noItemsMessage}
+      </MF.ItemsRemainingSpan>
       <Filter
-        query={filterValue}
-        setQuery={setFilterValue}
+        handleQuery={handleQuery}
         filters={[
           { name: "all", isPartOf: "filters" },
           { name: "active", isPartOf: "filters" },
           { name: "completed", isPartOf: "filters" },
         ]}
       />
-      <ClearCompletedButton onClick={handleClear}>
+      <MF.ClearCompletedButton onClick={handleClear}>
         Clear Completed
-      </ClearCompletedButton>
-    </MainFooterBody>
+      </MF.ClearCompletedButton>
+    </MF.MainFooterBody>
   );
 };
 

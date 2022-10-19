@@ -1,20 +1,16 @@
 import HeaderSearch from "../header-search/HeaderSearch.component";
 import ThemeSwitcher from "../theme-switcher/ThemeSwitcher.component";
-import { HeaderBar, HeaderBody } from "./Header.styles";
+import * as H from "./Header.styles";
 
-interface HeaderProps {
-  themeToggle: () => void;
-}
-
-const Header = ({ themeToggle }: HeaderProps) => {
+const Header = () => {
   return (
-    <HeaderBody>
-      <HeaderBar>
+    <H.HeaderBody>
+      <H.HeaderBar>
         <h1>TODO</h1>
-        <ThemeSwitcher themeToggle={themeToggle} />
-      </HeaderBar>
+        <ThemeSwitcher />
+      </H.HeaderBar>
       <HeaderSearch />
-    </HeaderBody>
+    </H.HeaderBody>
   );
 };
 

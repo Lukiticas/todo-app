@@ -27,6 +27,8 @@ const TaskMessage = styled.p`
   font-size: 0.9rem;
   color: ${({ theme }) =>
     theme.title === "dark" ? theme.colors.wrd400 : theme.colors.wrd800};
+
+  word-break: break-all;
 `;
 
 const TaskClearButton = styled.button`
@@ -66,6 +68,7 @@ const TaskBody = styled.div`
 
   &[data-done="true"] {
     ${TaskIconBody} {
+      outline: none;
       background-image: ${({ theme }) => theme.gradient.blueToPurple};
       &::after {
         opacity: 0;

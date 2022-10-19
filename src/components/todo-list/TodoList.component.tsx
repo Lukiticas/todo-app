@@ -1,29 +1,16 @@
-import { Todo } from "../../App";
+import { useContext } from "react";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { TodoListProps } from "../../interfaces";
+
 import TodoTask from "../todo-task/TodoTask.component";
+import { TodoContext } from "../../stores/TodoContextSupplier.stores";
 import { TodoListBody } from "./TodoList.styles";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
-interface TodoListProps {
-  listOfTodos: Todo[];
-  handleDelete: (value: string) => void;
-  handleToggleDone: (id: string) => void;
-  handleOnDragEnd: (event: DropResult) => void;
-}
+const TodoList = ({ listOfTodos }: TodoListProps) => {
+  const { handleOnDragEnd } = useContext(TodoContext);
 
-const TodoList = ({
-  listOfTodos,
-  handleDelete,
-  handleToggleDone,
-  handleOnDragEnd,
-}: TodoListProps) => {
   const todoElements = listOfTodos.map((el, idx) => (
-    <TodoTask
-      idx={idx}
-      key={el.id}
-      handleDelete={handleDelete}
-      handleToggleDone={handleToggleDone}
-      {...el}
-    />
+    <TodoTask idx={idx} key={el.id} {...el} />
   ));
 
   return (

@@ -1,61 +1,19 @@
-import { nanoid } from "nanoid";
 import { useState } from "react";
-
-import dark from "./styles/themes/dark";
-import light from "./styles/themes/light";
-
-import { ThemeProvider } from "styled-components";
-import {
-  Footer,
-  GlobalStyle,
-  MainApp,
-  MainContent,
-} from "./styles/global.styles";
-
-import Background from "./components/background/Background.component";
-import Header from "./components/header/Header.component";
-import MainFooter from "./components/main-footer/MainFooter.component";
-import TodoList from "./components/todo-list/TodoList.component";
-
 import { DropResult } from "react-beautiful-dnd";
-import useTheme from "./utils/useTheme.util";
-export interface Todo {
-  payload: string;
-  id: string;
-  isDone: boolean;
-}
+import { nanoid } from "nanoid";
 
-const todosItems: Todo[] = [
-  { payload: "Jog around the park", id: nanoid(), isDone: true },
-  { payload: "10 minutes meditation", id: nanoid(), isDone: false },
-  { payload: "Read for 1 hour", id: nanoid(), isDone: false },
-  { payload: "Pick up groceries", id: nanoid(), isDone: false },
-  {
-    payload: "Complete Todo App on Frontend Mentor",
-    id: nanoid(),
-    isDone: false,
-  },
-];
+import TodoContextSupplier from "./stores/TodoContextSupplier.stores";
+import ThemeSupplier from "./stores/ThemeSupplier.stores";
+
+import usePersistedState from "./utils/UsePersistedState.util";
+import { todosItems } from "./utils/InitialTodos.util";
+
+import { Background, Header, MainFooter, TodoList } from "./components";
+import * as A from "./styles/global.styles";
 
 const App = () => {
-  const [todos, setTodos] = useState(todosItems);
+  const [todos, setTodos] = usePersistedState("todoItems", todosItems);
   const [filterValue, setFilterValue] = useState("all");
-
-  const [theme, toggleTheme] = useTheme("todoTheme", {
-    primary: dark,
-    secundary: light,
-  });
-
-  const filteredTodos = todos.filter((el) => {
-    switch (filterValue) {
-      case "active":
-        return el.isDone === false;
-      case "completed":
-        return el.isDone === true;
-      default:
-        return el.isDone === el.isDone;
-    }
-  });
 
   const handleRemoveCompletedItems = () => {
     setTodos((prevTodos) => {
@@ -71,7 +29,7 @@ const App = () => {
     });
   };
 
-  const handleDelete = (id: string) => {
+  const handleDeleteTodo = (id: string) => {
     setTodos((prev) => prev.filter((el) => el.id !== id));
   };
 
@@ -87,33 +45,52 @@ const App = () => {
     });
   };
 
+  const handleCreateTodo = (value: string) => {
+    const newTodo = { payload: value, id: nanoid(), isDone: false };
+    setTodos((oldTodos) => [newTodo, ...oldTodos]);
+  };
+
+  const filteredTodos = todos.filter((el) => {
+    switch (filterValue) {
+      case "active":
+        return el.isDone === false;
+      case "completed":
+        return el.isDone === true;
+      case "all":
+        return el.isDone === el.isDone;
+      default:
+        return el.isDone === el.isDone;
+    }
+  });
+
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <>
-        <MainApp>
+    <ThemeSupplier>
+      <TodoContextSupplier
+        values={{
+          handleRemoveCompletedItems,
+          handleCreateTodo,
+          handleOnDragEnd,
+          handleToggleDone,
+          handleDeleteTodo,
+        }}
+      >
+        <A.MainApp>
           <Background />
-          <Header themeToggle={toggleTheme} />
-          <MainContent>
-            <TodoList
-              handleOnDragEnd={handleOnDragEnd}
-              handleDelete={handleDelete}
-              handleToggleDone={handleToggleDone}
-              listOfTodos={filteredTodos}
-            />
+          <Header />
+          <A.MainContent>
+            <TodoList listOfTodos={filteredTodos} />
             <MainFooter
               itemsRemaining={filteredTodos.length}
-              filterValue={filterValue}
-              setFilterValue={setFilterValue}
+              handleQuery={{ query: filterValue, setQuery: setFilterValue }}
               handleClear={handleRemoveCompletedItems}
             />
-          </MainContent>
-          <Footer>
+          </A.MainContent>
+          <A.Footer>
             <p>Drag and drop to reorder list</p>
-          </Footer>
-        </MainApp>
-      </>
-    </ThemeProvider>
+          </A.Footer>
+        </A.MainApp>
+      </TodoContextSupplier>
+    </ThemeSupplier>
   );
 };
 

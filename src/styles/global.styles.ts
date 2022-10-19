@@ -133,7 +133,6 @@ const MainApp = styled.div`
 
 const MainContent = styled.main`
   overflow: hidden;
-
   margin-block: 1.3rem;
   inline-size: 100%;
 
@@ -146,7 +145,7 @@ const MainContent = styled.main`
 
 const Footer = styled.footer`
   width: 100%;
-
+  margin-block-end: 2rem;
   font-size: 0.6rem;
   font-weight: 600;
   color: ${({ theme }) =>
