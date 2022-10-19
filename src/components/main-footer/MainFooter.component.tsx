@@ -7,13 +7,15 @@ import {
 
 interface MainFooterProps {
   itemsRemaining: number | string;
-  handleFilter: (value: string) => void;
+  setFilterValue: React.Dispatch<React.SetStateAction<string>>;
+  filterValue: string;
   handleClear: () => void;
 }
 
 const MainFooter = ({
   itemsRemaining,
-  handleFilter,
+  setFilterValue,
+  filterValue,
   handleClear,
 }: MainFooterProps) => {
   return (
@@ -24,7 +26,8 @@ const MainFooter = ({
           : "no task, add one!"}
       </ItemsRemainingSpan>
       <Filter
-        handleFilter={handleFilter}
+        query={filterValue}
+        setQuery={setFilterValue}
         filters={[
           { name: "all", isPartOf: "filters" },
           { name: "active", isPartOf: "filters" },

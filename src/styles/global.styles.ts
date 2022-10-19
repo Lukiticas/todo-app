@@ -101,6 +101,7 @@ const GlobalStyle = createGlobalStyle`
 
     body {
       overflow-x: hidden;
+      max-width: 100vw;
       position: relative;
       background-color: ${({ theme }) => theme.colors.bg500};
     }
@@ -131,110 +132,30 @@ const MainApp = styled.div`
 `;
 
 const MainContent = styled.main`
-  margin-top: 1.3rem;
+  overflow: hidden;
+
+  margin-block: 1.3rem;
   inline-size: 100%;
 
   background-color: ${({ theme }) => theme.colors.bg400};
 
   border-radius: 0.2rem;
-  box-shadow: ${({ theme }) =>
-      theme.title === "dark" ? theme.colors.bg500 : "rgba(100, 100, 111, 0.2)"}
-    0px 7px 29px 0px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px; ;
 `;
 
-const TodoList = styled.div`
-  inline-size: 100%;
-`;
+const Footer = styled.footer`
+  width: 100%;
 
-const TodoIconCheck = styled.div`
-  position: relative;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: ${({ theme }) =>
+    theme.title === "dark" ? theme.colors.wrd700 : theme.colors.wrd800};
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0.3rem;
-  border-radius: 100vw;
-  outline: 0.07rem solid ${({ theme }) => theme.colors.wrd700};
-`;
-
-const CheckIcon = styled.img`
-  width: 0.6rem;
-  opacity: 0;
-`;
-
-const TodoCrossIcon = styled.img`
-  width: 1rem;
-`;
-
-const CancelTodoButton = styled.button`
-  opacity: 0;
-
-  outline: none;
-  border: none;
-  margin-inline-start: auto;
-  cursor: pointer;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 0.3rem;
-  border-radius: 100vw;
-  background-color: transparent;
-  transition: opacity 100ms ease-in, transform 500ms ease;
-
-  &:hover {
-    transform: rotate(180deg);
+  & > p {
+    text-align: center;
+    width: 100%;
   }
 `;
 
-const TodoItemBody = styled.section`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
-  min-height: 3.3rem;
-  padding-inline: 1rem;
-
-  cursor: pointer;
-
-  border-bottom: 0.08rem solid ${({ theme }) => theme.colors.wrd700};
-
-  p {
-    color: ${({ theme }) =>
-      theme.title === "dark" ? theme.colors.wrd400 : theme.colors.wrd800};
-    font-size: 0.9rem;
-  }
-
-  &:hover {
-    ${CancelTodoButton} {
-      opacity: 1;
-    }
-
-    ${TodoIconCheck} {
-      outline: none;
-      background-image: ${({ theme }) => theme.gradient.blueToPurple};
-
-      &::after {
-        content: "";
-        position: absolute;
-        background-color: ${({ theme }) => theme.colors.bg400};
-        border-radius: 100vw;
-        inset: 8%;
-      }
-    }
-  }
-`;
-
-export {
-  GlobalStyle,
-  TodoCrossIcon,
-  TodoIconCheck,
-  TodoItemBody,
-  CheckIcon,
-  TodoList,
-  MainApp,
-  MainContent,
-  CancelTodoButton,
-};
+export { GlobalStyle, MainApp, MainContent, Footer };

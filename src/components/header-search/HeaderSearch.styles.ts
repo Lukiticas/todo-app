@@ -6,6 +6,7 @@ const HeaderInput = styled.input`
 
   outline: none;
   border: none;
+
   background-color: transparent;
   color: ${({ theme }) =>
     theme.title === "dark" ? theme.colors.wrd400 : theme.colors.wrd800};
@@ -18,17 +19,20 @@ const HeaderInput = styled.input`
 const HeaderIconCheck = styled.div`
   position: relative;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-width: 1.1rem;
+  min-height: 1.1rem;
 
-  padding: 0.3rem;
   border-radius: 100vw;
   outline: 0.07rem solid ${({ theme }) => theme.colors.wrd700};
 `;
 
 const HeaderIcon = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
   width: 0.6rem;
+
   opacity: 0;
 `;
 
@@ -44,7 +48,7 @@ const HeaderInputBody = styled.div`
   border-radius: 0.2rem;
 
   &:not(:has(:placeholder-shown)) {
-    ${HeaderIcon} {
+    ${HeaderIconCheck}:hover ${HeaderIcon} {
       opacity: 1;
     }
 
@@ -69,7 +73,7 @@ const HeaderInputBody = styled.div`
         position: absolute;
         background-color: ${({ theme }) => theme.colors.bg400};
         border-radius: 100vw;
-        inset: 8%;
+        inset: 0.1rem;
       }
     }
   }

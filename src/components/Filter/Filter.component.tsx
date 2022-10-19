@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
+import { Fragment } from "react";
+
 import {
   FooterFilterBody,
   FooterFilterLabel,
@@ -12,31 +14,29 @@ interface Filter {
 
 interface FilterProps {
   filters: Filter[];
-  handleFilter: (value: string) => void;
+  query: string;
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Filter = ({ filters, handleFilter }: FilterProps) => {
-  const [filter, setFilter] = useState({ name: "" });
-
+const Filter = ({ filters, query, setQuery }: FilterProps) => {
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    setFilter({ name: target.id });
+    setQuery(target.id);
   };
 
-  useEffect(() => {
-    handleFilter(filter.name.toLowerCase());
-  }, [filter]);
-
-  const radios = filters.map((el) => (
-    <>
+  const radios = filters.map((el, idx) => (
+    <Fragment key={nanoid()}>
       <FooterFilterRadio
-        checked={filter.name === el.name}
-        onChange={(event) => handleChange(event)}
+        name={el.isPartOf}
         id={el.name}
         type="radio"
-        name={el.isPartOf}
+        title={el.name}
+        onChange={(event) => handleChange(event)}
+        checked={query === el.name}
       />
-      <FooterFilterLabel htmlFor={el.name}>{el.name}</FooterFilterLabel>
-    </>
+      <FooterFilterLabel key={nanoid()} htmlFor={el.name}>
+        {el.name}
+      </FooterFilterLabel>
+    </Fragment>
   ));
   return <FooterFilterBody>{radios}</FooterFilterBody>;
 };
