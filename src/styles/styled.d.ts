@@ -13,7 +13,7 @@ declare module "styled-components" {
       wrd600?: string;
       wrd700?: string;
       wrd800?: string;
-      wrd800: string;
+      wrd900?: string;
       acc: string;
       acc1?: string;
     };
