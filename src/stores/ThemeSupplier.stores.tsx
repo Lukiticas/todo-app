@@ -10,9 +10,7 @@ interface themeContext {
   toggleTheme: () => void;
 }
 
-export const ThemeSupplierContext = createContext<themeContext>(
-  {} as themeContext
-);
+const ThemeSupplierContext = createContext<themeContext>({} as themeContext);
 
 const ThemeSupplier = ({ children }: { children: JSX.Element }) => {
   const [theme, toggleTheme] = useTheme("todoTheme", {
@@ -30,4 +28,5 @@ const ThemeSupplier = ({ children }: { children: JSX.Element }) => {
   );
 };
 
+export { ThemeSupplierContext };
 export default ThemeSupplier;

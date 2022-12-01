@@ -1,10 +1,6 @@
 import { DefaultTheme } from "styled-components";
+import { themes } from "./../interfaces/index";
 import usePersistedState from "./UsePersistedState.util";
-
-interface themes {
-  primary: DefaultTheme;
-  secundary: DefaultTheme;
-}
 
 const useTheme = (
   themeTitle: string,

@@ -1,23 +1,15 @@
 import { createContext } from "react";
-import { DropResult } from "react-beautiful-dnd";
-
+import { TodoActions } from "../interfaces";
 interface TCSProps {
   children: JSX.Element;
-  values: todoContext;
+  values: TodoActions;
 }
 
-interface todoContext {
-  handleCreateTodo: (value: string) => void;
-  handleRemoveCompletedItems: () => void;
-  handleToggleDone: (id: string) => void;
-  handleOnDragEnd: (value: DropResult) => void;
-  handleDeleteTodo: (id: string) => void;
-}
-
-export const TodoContext = createContext<todoContext>({} as todoContext);
+const TodoContext = createContext<TodoActions>({} as TodoActions);
 
 const TodoContextSupplier = ({ children, values }: TCSProps) => {
   return <TodoContext.Provider value={values}>{children}</TodoContext.Provider>;
 };
 
+export { TodoContext };
 export default TodoContextSupplier;

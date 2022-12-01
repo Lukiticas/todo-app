@@ -1,3 +1,5 @@
+import { DefaultTheme } from "styled-components";
+import { DropResult } from "react-beautiful-dnd";
 export interface Todo {
   payload: string;
   id: string;
@@ -35,4 +37,21 @@ export interface TodoTaskProps {
 
 export interface TodoListProps {
   listOfTodos: Todo[];
+}
+
+export interface TodoActions {
+  handleCreateTodo: (value: string) => void;
+  handleDeleteTodo: (id: string) => void;
+  handleRemoveCompletedItems: () => void;
+  handleToggleDone: (id: string) => void;
+  handleOnDragEnd: (value: DropResult) => void;
+}
+
+export interface useTodo {
+  todos: Todo[];
+  actions: TodoActions;
+}
+export interface themes {
+  primary: DefaultTheme;
+  secundary: DefaultTheme;
 }
